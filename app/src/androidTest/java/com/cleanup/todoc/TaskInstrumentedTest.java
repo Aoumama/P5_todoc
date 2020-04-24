@@ -1,10 +1,10 @@
 package com.cleanup.todoc;
 
-import android.arch.persistence.room.Room;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.room.Room;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.cleanup.todoc.database.TaskDatabase;
 import com.cleanup.todoc.model.Project;
@@ -66,7 +66,7 @@ public class TaskInstrumentedTest {
         for (Project project : Project.getAllProjects())
             database.projectDao().insertProject(project);
         database.taskDao().insert(task1);
-        Task task1 = LiveDataTest.getValue(database.taskDao().getTasks());
+        Task task1 = LiveDataTest.getValue(database.taskDao().getTasks()).get(0);
 
         assertTrue(task1.getName().equals(task1.getName())&& task1.getId() == task1.getId());
     }
