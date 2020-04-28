@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.database.dao.ProjectDao;
 import com.cleanup.todoc.injection.Injection;
 import com.cleanup.todoc.injection.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
@@ -40,15 +39,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
 
     public Project[] allProjects = Project.getAllProjects();
-//    @NonNull
-//    private final ArrayList<Task> tasks = new ArrayList<>();
 
     /**
      * List of all current tasks of the application
      */
     @NonNull
     private List<Task> allTasks = new ArrayList<>();
-
     private final TasksAdapter adapter = new TasksAdapter(allTasks, this);
     @NonNull
     private SortMethod sortMethod = SortMethod.NONE;
@@ -65,12 +61,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @SuppressWarnings("NullableProblems")
     @NonNull
     private TextView lblNoTasks;
-
-
     private TaskViewModel taskViewModel;
-    public ProjectDao projectDao;
-    public List<Project> projects;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,11 +139,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
-
-                Task task = new Task(
-//                        id,
+                    Task task = new Task(
                         taskProject.getId(),
                         taskName,
                         new Date().getTime()
@@ -174,10 +161,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     }
 
 
-
-
-
-
 //-----------------------------------
     private void showAddTaskDialog() {
         final AlertDialog dialog = getAddTaskDialog();
@@ -194,8 +177,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 // ------------------------------------------
     private void addTask(@NonNull Task task) {
         taskViewModel.createTask(task);
-//        lblNoTasks.setVisibility(View.GONE);
-//        listTasks.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -271,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     }
 
 
-
 // -------------------------------------------
     private void populateDialogSpinner() {
         final ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
@@ -281,9 +261,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         }
     }
 
-
 // ------------- DATA --------------
-
 
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
@@ -301,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         taskViewModel.getAllProjects().observe(this, pProjects ->
                 allProjects = pProjects.toArray(new Project[0]));
     }
+
     /**
      * List of all possible sort methods for task
      */

@@ -1,6 +1,5 @@
 package com.cleanup.todoc;
 
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -23,7 +22,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class TaskInstrumentedTest {
+public class TaskDaoTest {
 
     private TaskDatabase database;
     private static Task task1 = new Task(1, "tâche 1",new Date().getTime());
@@ -54,7 +53,6 @@ public class TaskInstrumentedTest {
         this.database.projectDao().insertProject(Project.getAllProjects()[0]);
         this.database.projectDao().insertProject(Project.getAllProjects()[1]);
         this.database.projectDao().insertProject(Project.getAllProjects()[2]);
-
 
         items = LiveDataTest.getValue(database.projectDao().getAllProjects());
         assertEquals(3, items.size());
@@ -95,6 +93,5 @@ public class TaskInstrumentedTest {
         assertEquals(1, tasks.size());
     }
 
+
 }
-
-
